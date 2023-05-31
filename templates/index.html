@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uptime Monitor</title>
+    <style>
+        .status-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-bar .status-box {
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+
+        .status-bar .status-box.up {
+            background-color: green;
+        }
+
+        .status-bar .status-box.down {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Uptime Monitor</h1>
+    {% for endpoint, pings in results.items() %}
+        <h2>{{ endpoint }}</h2>
+        <div class="status-bar">
+            {% for status, response_time in pings %}
+                <div class="status-box {% if status %}up{% else %}down{% endif %}"></div>
+            {% endfor %}
+        </div>
+        <p>Uptime: {{ pings | calculate_uptime }}%</p>
+        <p>Response Time: {{ pings | calculate_response_time }}</p>
+    {% endfor %}
+
+    <script>
+        function refreshContent() {
+            setTimeout(function() {
+                window.location.reload();
+            }, 5000);
+        }
+        window.onload = refreshContent;
+    </script>
+</body>
+</html>
