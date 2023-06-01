@@ -8,6 +8,7 @@ endpoints:
 alerting:
   enabled: false
   consecutive_failures_threshold: 6
+  cooldown_duration: 300
   pagerduty:
     enabled: false
     api_key: YOUR_PAGERDUTY_API_KEY
