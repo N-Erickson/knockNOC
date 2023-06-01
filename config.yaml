@@ -2,3 +2,5 @@ endpoints:
   - https://google.com
   - https://github.com
   - https://exam
+  
+  ping_interval: 10
