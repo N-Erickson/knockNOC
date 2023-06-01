@@ -4,3 +4,24 @@ endpoints:
   - https://exam
   
   ping_interval: 10
+
+alerting:
+  enabled: true
+  consecutive_failures_threshold: 6
+  pagerduty:
+    enabled: true
+    api_key: YOUR_PAGERDUTY_API_KEY
+  opsgenie:
+    enabled: false
+    api_key: YOUR_OPSGENIE_API_KEY
+  slack:
+    enabled: true
+    webhook_url: YOUR_SLACK_WEBHOOK_URL
+    channel: alert-channel
+  telegram:
+    enabled: false
+    bot_token: YOUR_TELEGRAM_BOT_TOKEN
+    chat_id: YOUR_TELEGRAM_CHAT_ID
+  discord:
+    enabled: false
+    webhook_url: YOUR_DISCORD_WEBHOOK_URL
