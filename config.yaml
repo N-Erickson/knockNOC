@@ -6,16 +6,16 @@ endpoints:
   ping_interval: 10
 
 alerting:
-  enabled: true
+  enabled: false
   consecutive_failures_threshold: 6
   pagerduty:
-    enabled: true
+    enabled: false
     api_key: YOUR_PAGERDUTY_API_KEY
   opsgenie:
     enabled: false
     api_key: YOUR_OPSGENIE_API_KEY
   slack:
-    enabled: true
+    enabled: false
     webhook_url: YOUR_SLACK_WEBHOOK_URL
     channel: alert-channel
   telegram:
