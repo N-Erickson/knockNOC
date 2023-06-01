@@ -76,13 +76,20 @@ def send_slack_alert(endpoint, webhook_url, channel):
     response.raise_for_status()
 
 def send_alert(endpoint, config):
-    if config['alerting']['pagerduty']['enabled']:
-        send_pagerduty_alert(endpoint, config['alerting']['pagerduty']['api_key'])
+    current_timestamp = datetime.now().timestamp()
+    last_alert_timestamp = last_alert_timestamps.get(endpoint)
+    cooldown_duration = config['alerting']['cooldown_duration']
 
-    if config['alerting']['slack']['enabled']:
-        send_slack_alert(endpoint, config['alerting']['slack']['webhook_url'], config['alerting']['slack']['channel'])
+    if last_alert_timestamp is None or (current_timestamp - last_alert_timestamp >= cooldown_duration):
+        if config['alerting']['pagerduty']['enabled']:
+            send_pagerduty_alert(endpoint, config['alerting']['pagerduty']['api_key'])
 
-    # Add other alerting services like OpsGenie, Telegram, Discord, etc.
+        if config['alerting']['slack']['enabled']:
+            send_slack_alert(endpoint, config['alerting']['slack']['webhook_url'], config['alerting']['slack']['channel'])
+
+        last_alert_timestamps[endpoint] = current_timestamp
+
+
 
 env = Environment(
     loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')),
@@ -105,6 +112,7 @@ def check_for_alert(endpoint, pings, config):
             if time_since_last_alert is None or time_since_last_alert >= cooldown_duration:
                 send_alert(endpoint, config)
                 last_alert_timestamps[endpoint] = current_timestamp
+
 
 def send_pings(config):
     while True:
