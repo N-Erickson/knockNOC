@@ -22,8 +22,16 @@ if not os.path.exists(database_path):
     conn.commit()
     conn.close()
 
+# Load configuration from config.yaml
+with open('config.yaml') as config_file:
+    config = yaml.safe_load(config_file)
+
+# Get the ping_interval value from the config
+ping_interval = config.get('ping_interval', 5)  # Default to 5 seconds if not specified in config
+
+
 ping_history = {}
-ping_interval = 5  # Interval in seconds for pinging the endpoints
+#ping_interval = 5  # Interval in seconds for pinging the endpoints
 
 
 def calculate_uptime(pings):
