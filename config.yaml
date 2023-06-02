@@ -3,7 +3,7 @@ endpoints:
   - https://github.com
   - https://exam
   
-  ping_interval: 10
+ping_interval: 10
 
 alerting:
   enabled: false
