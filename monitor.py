@@ -75,6 +75,42 @@ def send_slack_alert(endpoint, webhook_url, channel):
     response = requests.post(webhook_url, json=payload, headers=headers)
     response.raise_for_status()
 
+def send_opsgenie_alert(endpoint, api_key):
+    payload = {
+        "message": f"{endpoint} is down!",
+        "alias": endpoint,
+        "source": "Uptime Monitor",
+        "priority": "P1"
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"GenieKey {api_key}"
+    }
+    url = "https://api.opsgenie.com/v2/alerts"
+    response = requests.post(url, data=json.dumps(payload), headers=headers)
+    response.raise_for_status()
+
+def send_telegram_alert(endpoint, token, chat_id):
+    message = f"{endpoint} is down!"
+    payload = {
+        "chat_id": chat_id,
+        "text": message
+    }
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    response = requests.post(url, json=payload)
+    response.raise_for_status()
+
+def send_discord_alert(endpoint, webhook_url):
+    message = f"{endpoint} is down!"
+    payload = {
+        "content": message
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    response = requests.post(webhook_url, json=payload, headers=headers)
+    response.raise_for_status()
+
 def send_alert(endpoint, config):
     current_timestamp = datetime.now().timestamp()
     last_alert_timestamp = last_alert_timestamps.get(endpoint)
@@ -86,6 +122,15 @@ def send_alert(endpoint, config):
 
         if config['alerting']['slack']['enabled']:
             send_slack_alert(endpoint, config['alerting']['slack']['webhook_url'], config['alerting']['slack']['channel'])
+
+        if config['alerting']['opsgenie']['enabled']:
+            send_opsgenie_alert(endpoint, config['alerting']['opsgenie']['api_key'])
+
+        if config['alerting']['telegram']['enabled']:
+            send_telegram_alert(endpoint, config['alerting']['telegram']['token'], config['alerting']['telegram']['chat_id'])
+
+        if config['alerting']['discord']['enabled']:
+            send_discord_alert(endpoint, config['alerting']['discord']['webhook_url'])
 
         last_alert_timestamps[endpoint] = current_timestamp
 
