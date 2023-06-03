@@ -3,53 +3,98 @@
 <head>
     <title>Uptime Monitor</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            animation: glitch 2s infinite;
+        }
+
         .status-bar {
             display: flex;
             align-items: center;
+            margin: 10px;
         }
 
-        .status-bar .status-box {
+        .status-box {
             width: 10px;
             height: 10px;
             margin-right: 5px;
             border-radius: 50%;
+            animation: blink 1s infinite;
         }
 
-        .status-bar .status-box.up {
-            background-color: green;
+        .status-box.up {
+            background-color: #00FF00;
         }
 
-        .status-bar .status-box.down {
+        .status-box.down {
             background-color: red;
+        }
+
+        p {
+            margin: 10px;
+            animation: typing 5s steps(20) infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            25% {
+                transform: translate(-2px, -2px);
+                opacity: 0.75;
+            }
+            50% {
+                transform: translate(2px, 2px);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translate(-2px, 2px);
+                opacity: 0.75;
+            }
+            100% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Uptime Monitor</h1>
-
-    <!-- Registration Form -->
-    <h2>Registration</h2>
-    <form action="/register" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <input type="submit" value="Register">
-    </form>
-
-    <!-- Login Form -->
-    <h2>Login</h2>
-    <form action="/login" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <input type="submit" value="Login">
-    </form>
 
     {% for endpoint, pings in results.items() %}
         <h2>{{ endpoint }}</h2>
@@ -62,13 +107,11 @@
         <p>Response Time: {{ pings | calculate_response_time }}</p>
     {% endfor %}
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function refreshContent() {
-            setTimeout(function() {
-                window.location.reload();
-            }, 5000);
-        }
-        window.onload = refreshContent;
+        $(document).ready(function() {
+            // Add your JavaScript code here
+        });
     </script>
 </body>
 </html>
