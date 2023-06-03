@@ -1,5 +1,5 @@
 # knockNOC
-The Uptime Monitor is a web application that allows you to monitor the uptime and response time of multiple endpoints simultaneously. This guide will walk you through the installation process and provide instructions for configuring the application.
+knockNOC is a web application that allows you to monitor the uptime and response time of multiple endpoints simultaneously. This guide will walk you through the installation process and provide instructions for configuring the application.
 
 ## Installation
 To install and run knockNOC, follow these steps:
