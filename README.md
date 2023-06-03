@@ -8,6 +8,7 @@ To install and run knockNOC, follow these steps:
 Make sure you have the following prerequisites installed on your system:
 
 Python (version 3.6 or higher)
+
 Pip (Python package installer)
 
 ## Clone the Repository
