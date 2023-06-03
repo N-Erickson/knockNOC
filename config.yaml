@@ -2,13 +2,15 @@ endpoints:
   - https://google.com
   - https://github.com
   - https://exam
-  
+
+#How often to ping in seconds
 ping_interval: 10
 
+#Alerting 
 alerting:
-  enabled: false
+  enabled: true
   consecutive_failures_threshold: 6
-  cooldown_duration: 300
+  cooldown_duration: 20
   pagerduty:
     enabled: false
     api_key: YOUR_PAGERDUTY_API_KEY
@@ -17,8 +19,8 @@ alerting:
     api_key: YOUR_OPSGENIE_API_KEY
   slack:
     enabled: false
-    webhook_url: YOUR_SLACK_WEBHOOK_URL
-    channel: alert-channel
+    webhook_url: URL
+    channel: alerts-channel
   telegram:
     enabled: false
     bot_token: YOUR_TELEGRAM_BOT_TOKEN
