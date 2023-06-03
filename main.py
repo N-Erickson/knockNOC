@@ -1,7 +1,7 @@
 import os
 import requests
 import yaml
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, jsonify
 from jinja2 import select_autoescape, Environment, FileSystemLoader
 from datetime import datetime, timedelta
 import sqlite3
@@ -43,7 +43,7 @@ def store_ping_data(endpoint, status, response_time):
 @app.route('/')
 def home():
     if 'username' in session:
-        rendered_template = template.render(results=ping_history, url_for=url_for, session=session)
+        rendered_template = template.render(results=ping_history, session=session)
         return rendered_template
     else:
         return redirect('/login')
@@ -77,6 +77,22 @@ def login():
                 return redirect('/')
     return render_template('login.html')
 
+@app.route('/endpoints')
+def get_endpoints():
+    endpoint_data = []
+    for endpoint, history in ping_history.items():
+        uptime = calculate_uptime(history)
+        avg_response_time = calculate_response_time(history)
+        if isinstance(avg_response_time, float):
+            avg_response_time = timedelta(seconds=avg_response_time)
+        endpoint_info = {
+            'endpoint': endpoint,
+            'uptime': uptime,
+            'avg_response_time': avg_response_time.total_seconds() if avg_response_time else None
+        }
+        endpoint_data.append(endpoint_info)
+    return jsonify(endpoints=endpoint_data)
+
 if __name__ == '__main__':
     # Start the ping thread
     def send_pings():
@@ -91,7 +107,7 @@ if __name__ == '__main__':
                     response_time = datetime.now() - start_time
                     status = response.ok
                 except requests.exceptions.RequestException:
-                    response_time = None
+                    response_time = timedelta(seconds=0)  # Set response_time to zero if there's an exception
                     status = False
 
                 ping_history[endpoint].append((status, response_time))
@@ -106,5 +122,5 @@ if __name__ == '__main__':
     ping_thread = threading.Thread(target=send_pings)
     ping_thread.start()
 
-    app.secret_key = 'secret_key'
+    app.secret_key = 'supersecretkey'
     app.run(debug=True)
