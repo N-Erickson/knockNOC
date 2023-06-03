@@ -32,7 +32,14 @@ knockNOC uses a configuration file (config.yaml) to define the endpoints you wan
 
 3. Customize the ping_interval value if desired. This controls the frequency of pinging for each request.
 
-4. Enable alerting if desired and configure each alert channel. Currently supports PagerDuty, OpsGenie, Slack, Telegram, and Discord. Set the consecutive_failures_threshold and cooldown_duration to what fits your needs. The failure threshold determines how many failures to trigger an alert. The cooldown determines how long to wait before sending another alert.
+4. Enable alerting if desired and configure each alert channel. Currently supports:
+* PagerDuty
+* OpsGenie
+* Slack
+* Telegram
+* Discord 
+
+5. Set the consecutive_failures_threshold and cooldown_duration to what fits your needs. The failure threshold determines how many failures to trigger an alert. The cooldown determines how long to wait before sending another alert.
 
 ## Run the Application
 Once you have configured the application, you can start knockNOC by running the following command:
