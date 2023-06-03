@@ -26,6 +26,31 @@
 </head>
 <body>
     <h1>Uptime Monitor</h1>
+
+    <!-- Registration Form -->
+    <h2>Registration</h2>
+    <form action="/register" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Register">
+    </form>
+
+    <!-- Login Form -->
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+
     {% for endpoint, pings in results.items() %}
         <h2>{{ endpoint }}</h2>
         <div class="status-bar">
