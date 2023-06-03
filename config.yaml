@@ -2,6 +2,7 @@ endpoints:
   - https://google.com
   - https://github.com
   - https://exam
+  - https://youtube.com
 
 #How often to ping in seconds
 ping_interval: 10

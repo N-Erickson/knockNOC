@@ -1,7 +1,7 @@
 import os
 import requests
 import yaml
-from flask import Flask, render_template_string, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 from jinja2 import select_autoescape, Environment, FileSystemLoader
 from datetime import datetime, timedelta
 import sqlite3
@@ -20,7 +20,7 @@ with open('config.yaml') as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 # Set up Jinja2 template environment
-template_loader = FileSystemLoader(searchpath="./templates")
+template_loader = FileSystemLoader(searchpath=os.path.abspath("templates"))
 template_env = Environment(loader=template_loader, autoescape=select_autoescape(['html', 'xml']))
 template_env.filters['calculate_response_time'] = calculate_response_time
 
@@ -43,7 +43,7 @@ def store_ping_data(endpoint, status, response_time):
 @app.route('/')
 def home():
     if 'username' in session:
-        rendered_template = template.render(results=ping_history)
+        rendered_template = template.render(results=ping_history, url_for=url_for, session=session)
         return rendered_template
     else:
         return redirect('/login')
@@ -59,7 +59,7 @@ def register():
             # Replace the example code with the actual logic for storing user information
             session['username'] = username
             return redirect('/')
-    return render_template_string('<h2>Registration</h2><form method="POST" action="/register"><label for="username">Username:</label><input type="text" id="username" name="username" required><br><label for="password">Password:</label><input type="password" id="password" name="password" required><br><input type="submit" value="Register"></form>')
+    return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -75,7 +75,7 @@ def login():
             if username == 'admin' and password == 'admin':
                 session['username'] = username
                 return redirect('/')
-    return render_template_string('<h2>Login</h2><form method="POST" action="/login"><label for="username">Username:</label><input type="text" id="username" name="username" required><br><label for="password">Password:</label><input type="password" id="password" name="password" required><br><input type="submit" value="Login"></form>')
+    return render_template('login.html')
 
 if __name__ == '__main__':
     # Start the ping thread
