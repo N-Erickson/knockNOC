@@ -1,7 +1,7 @@
 import os
 import requests
 import yaml
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, request, redirect, session
 from jinja2 import select_autoescape, Environment, FileSystemLoader
 from datetime import datetime, timedelta
 import sqlite3
@@ -10,6 +10,7 @@ import time
 import threading
 from collections import deque
 from monitoring import ping_history, calculate_uptime, calculate_response_time, check_for_alert
+import database
 
 app = Flask(__name__)
 
@@ -33,15 +34,48 @@ template = template_env.get_template('index.html')
 ping_interval = config['ping_interval']
 
 # Database initialization logic here
+database.create_database()
 
 def store_ping_data(endpoint, status, response_time):
     # Store ping data in the database logic here
-    pass
+    database.store_ping_data(endpoint, status, response_time)
 
 @app.route('/')
 def home():
-    rendered_template = template.render(results=ping_history)
-    return rendered_template
+    if 'username' in session:
+        rendered_template = template.render(results=ping_history)
+        return rendered_template
+    else:
+        return redirect('/login')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username and password:
+            # Store the username and password in the database (you can use a separate table for user authentication)
+            # Example: database.store_user(username, password)
+            # Replace the example code with the actual logic for storing user information
+            session['username'] = username
+            return redirect('/')
+    return render_template_string('<h2>Registration</h2><form method="POST" action="/register"><label for="username">Username:</label><input type="text" id="username" name="username" required><br><label for="password">Password:</label><input type="password" id="password" name="password" required><br><input type="submit" value="Register"></form>')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username and password:
+            # Retrieve the user from the database (you can use a separate table for user authentication)
+            # Example: user = database.retrieve_user(username)
+            # Replace the example code with the actual logic for retrieving user information
+            # if user and user.password == password:
+            #     session['username'] = username
+            if username == 'admin' and password == 'admin':
+                session['username'] = username
+                return redirect('/')
+    return render_template_string('<h2>Login</h2><form method="POST" action="/login"><label for="username">Username:</label><input type="text" id="username" name="username" required><br><label for="password">Password:</label><input type="password" id="password" name="password" required><br><input type="submit" value="Login"></form>')
 
 if __name__ == '__main__':
     # Start the ping thread
@@ -72,4 +106,5 @@ if __name__ == '__main__':
     ping_thread = threading.Thread(target=send_pings)
     ping_thread.start()
 
+    app.secret_key = 'secret_key'
     app.run(debug=True)

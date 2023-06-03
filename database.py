@@ -11,6 +11,8 @@ def create_database():
         c = conn.cursor()
         c.execute('''CREATE TABLE pings
                      (endpoint TEXT, status INTEGER, response_time FLOAT, timestamp TEXT)''')
+        c.execute('''CREATE TABLE users
+                     (username TEXT PRIMARY KEY, password TEXT)''')
         conn.commit()
         conn.close()
 
@@ -29,3 +31,22 @@ def retrieve_ping_data():
     data = c.fetchall()
     conn.close()
     return data
+
+def store_user(username, password):
+    conn = sqlite3.connect(database_path)
+    c = conn.cursor()
+    c.execute("INSERT INTO users VALUES (?, ?)",
+              (username, password))
+    conn.commit()
+    conn.close()
+
+def retrieve_user(username):
+    conn = sqlite3.connect(database_path)
+    c = conn.cursor()
+    c.execute("SELECT * FROM users WHERE username=?", (username,))
+    user = c.fetchone()
+    conn.close()
+    if user:
+        return {'username': user[0], 'password': user[1]}
+    else:
+        return None
