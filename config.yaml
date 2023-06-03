@@ -8,7 +8,7 @@ ping_interval: 10
 
 #Alerting 
 alerting:
-  enabled: true
+  enabled: false
   consecutive_failures_threshold: 6
   cooldown_duration: 20
   pagerduty:
