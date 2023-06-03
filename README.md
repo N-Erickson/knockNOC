@@ -50,7 +50,7 @@ python main.py
 ## Usage
 To access the web-based dashboard for knockNOC, open your web browser and enter the following URL:
 ```
-http://localhost:5000
+http://127.0.0.1:5000
 ```
 
 ## Contributing
