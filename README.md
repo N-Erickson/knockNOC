@@ -15,7 +15,7 @@ Pip (Python package installer)
 First, clone the repository to your local machine using the following command:
 
 ```
-git clone https://github.com/your-username/uptime-monitor.git
+git clone https://github.com/n-erickson/knockNOC.git
 ```
 ## Install Dependencies
 CD into the knockNOC directory and install the required Python dependencies by running the following command:
