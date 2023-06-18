@@ -1,6 +1,6 @@
-# KnockNOC
+# knockNOC
 
-KnockNOC is a network monitoring application that pings endpoints (IP addresses or URLs) at regular intervals to check their availability. It tracks the response time and status of each endpoint and provides a web interface to view the monitoring results.
+knockNOC is a network monitoring application that pings endpoints (IP addresses or URLs) at regular intervals to check their availability. It tracks the response time and status of each endpoint and provides a web interface to view the monitoring results.
 
 ## Features
 
