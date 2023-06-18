@@ -15,6 +15,27 @@ with open('config.yaml', 'r') as f:
 # Create Flask app
 app = Flask(__name__)
 
+# Function to create the database and table if they don't exist
+def create_database():
+    conn = sqlite3.connect('pings.db')
+    c = conn.cursor()
+
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS pings (
+            id INTEGER PRIMARY KEY,
+            endpoint TEXT,
+            sent_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            received_time TIMESTAMP,
+            successful BOOLEAN
+        )
+    ''')
+
+    conn.commit()
+    conn.close()
+
+# Run the function to create the database
+create_database()
+
 # Create database if it doesn't exist
 conn = sqlite3.connect('pings.db')
 c = conn.cursor()
