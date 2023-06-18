@@ -243,9 +243,9 @@ def is_valid_ip_address(endpoint):
             return False
     return True
 
-# Schedule the function to ping endpoints every 5 seconds
+# Schedule the function to ping endpoints with the configured frequency
 scheduler = BackgroundScheduler()
-scheduler.add_job(ping_endpoints, 'interval', seconds=5)
+scheduler.add_job(ping_endpoints, 'interval', seconds=config['ping_frequency'])
 scheduler.start()
 
 @app.route('/')
@@ -309,4 +309,4 @@ def api_pings():
     return jsonify(pings)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port="5050")
