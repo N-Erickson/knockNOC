@@ -44,7 +44,6 @@ Open the config.yaml file and customize the configuration according to your need
     ```bash
     python app.py
 
-
 6. The application will start running on http://localhost:5000.
 
 
