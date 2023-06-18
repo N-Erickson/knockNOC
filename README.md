@@ -14,6 +14,10 @@ KnockNOC is a network monitoring application that pings endpoints (IP addresses 
 
 To install and run KnockNOC locally, follow these steps:
 
+Prereq:
+1. Install Python
+2. Install Pip
+
 1. Clone the repository:
 
    ```bash
