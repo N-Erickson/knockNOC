@@ -1,27 +1,39 @@
 endpoints:
-  - https://google.com
-  - https://github.com
-  - https://exam
-  - https://youtube.com
+  - url: https://google.com
+    display_name: 'Google'
+  - url: https://yahoo.com
+    display_name: 'Yahoo!'
+  - url: https://notworking
+  - url: https://discord.com
+    display_name: 'Discord'
+  - url: https://cnn.com
+    display_name: 'CNN'
+  - url: 192.168.1.1
+    display_name: 'Local Thing'
 
-#How often to ping in seconds
-ping_interval: 10
+#display name optional
+#how often to ping duh
+ping_frequency: 10
 
 #Alerting 
+#Enable alerting and the type of alert
+#conseq failures is how many in a row to trigger alerts
+#cooldown is how long before sending another alert
 alerting:
   enabled: false
   consecutive_failures_threshold: 6
-  cooldown_duration: 20
+  cooldown_duration: 60
   pagerduty:
     enabled: false
     api_key: YOUR_PAGERDUTY_API_KEY
+    service_id: YOUR_SERVICE_ID
   opsgenie:
     enabled: false
     api_key: YOUR_OPSGENIE_API_KEY
   slack:
     enabled: false
-    webhook_url: URL
-    channel: alerts-channel
+    webhook_url: WEBHOOK_URL
+    channel: CHANNEL
   telegram:
     enabled: false
     bot_token: YOUR_TELEGRAM_BOT_TOKEN

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report - knockNOC</title>
+    <style>
+        /* Base styles */
+        body {
+            background-color: #11161D;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+            padding-top: 30px;
+            font-size: 32px;
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .chart-container {
+            width: 400px;
+            margin: 10px;
+        }
+
+        .logs-container {
+            margin: 20px;
+        }
+
+        /* Log item styles */
+        .log-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #212D3B;
+            border: 1px solid #2C3E50;
+            border-radius: 5px;
+        }
+
+        .log-timestamp {
+            color: #FF4136;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .log-endpoint {
+            color: #FFFFFF;
+        }
+
+        .log-response-time,
+        .log-success-rate {
+            margin-top: 5px;
+            color: #FFFFFF;
+        }
+
+        /* Chart canvas styles */
+        canvas {
+            background-color: #212D3B;
+            border: 1px solid #2C3E50;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+        // Fetch data from the ping.db file
+        function fetchData() {
+            return fetch('../ping.db')
+                .then(response => response.json())
+                .then(data => {
+                    const chartData = data.map(endpoint => ({
+                        label: endpoint.display_name || endpoint.endpoint,
+                        responseTime: calculateAverageResponseTime(endpoint.pings),
+                        successRate: calculateSuccessRate(endpoint.pings),
+                    }));
+
+                    return chartData;
+                });
+        }
+
+        // Calculate the average response time
+        function calculateAverageResponseTime(pings) {
+            const successfulPings = pings.filter(ping => ping.successful);
+            if (successfulPings.length === 0) {
+                return 0;
+            }
+            const totalResponseTime = successfulPings.reduce((sum, ping) => sum + ping.response_time, 0);
+            return Math.round(totalResponseTime / successfulPings.length);
+        }
+
+        // Calculate the success rate
+        function calculateSuccessRate(pings) {
+            const successfulPings = pings.filter(ping => ping.successful);
+            const successRate = successfulPings.length / pings.length;
+            return successRate;
+        }
+
+        // Generate a line chart for response times
+        function generateResponseTimeChart(data) {
+            const ctx = document.getElementById('response-time-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(data => data.label),
+                    datasets: [{
+                        label: 'Response Time',
+                        data: data.map(data => data.responseTime),
+                        borderColor: 'rgb(54, 162, 235)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Response Time'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generate a bar chart for success rates
+        function generateSuccessRateChart(data) {
+            const ctx = document.getElementById('success-rate-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(data => data.label),
+                    datasets: [{
+                        label: 'Success Rate',
+                        data: data.map(data => data.successRate),
+                        backgroundColor: 'rgb(75, 192, 192)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Success Rate'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generate historical logs
+        function generateHistoricalLogs(data) {
+            const logsContainer = document.getElementById('historical-logs');
+
+            for (const dataItem of data) {
+                const logItem = document.createElement('div');
+                logItem.classList.add('log-item');
+
+                const timestamp = document.createElement('div');
+                timestamp.classList.add('log-timestamp');
+                timestamp.textContent = moment().format('YYYY-MM-DD HH:mm:ss');
+
+                const endpoint = document.createElement('div');
+                endpoint.classList.add('log-endpoint');
+                endpoint.textContent = dataItem.label;
+
+                const responseTime = document.createElement('div');
+                responseTime.classList.add('log-response-time');
+                responseTime.textContent = `Response Time: ${dataItem.responseTime} ms`;
+
+                const successRate = document.createElement('div');
+                successRate.classList.add('log-success-rate');
+                successRate.textContent = `Success Rate: ${(dataItem.successRate * 100).toFixed(2)}%`;
+
+                logItem.appendChild(timestamp);
+                logItem.appendChild(endpoint);
+                logItem.appendChild(responseTime);
+                logItem.appendChild(successRate);
+
+                logsContainer.appendChild(logItem);
+            }
+        }
+
+        // Generate the report
+        function generateReport() {
+            fetchData().then(data => {
+                generateResponseTimeChart(data);
+                generateSuccessRateChart(data);
+                generateHistoricalLogs(data);
+            });
+        }
+
+        // Execute the report generation on page load
+        window.addEventListener('load', generateReport);
+    </script>
+</head>
+<body>
+    <h1>Report - knockNOC</h1>
+
+    <div class="container">
+        <div class="chart-container">
+            <canvas id="response-time-chart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="success-rate-chart"></canvas>
+        </div>
+    </div>
+
+    <h2>Historical Logs</h2>
+    <div id="historical-logs" class="logs-container"></div>
+</body>
+</html>
