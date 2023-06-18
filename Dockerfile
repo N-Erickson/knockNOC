@@ -19,7 +19,7 @@ EXPOSE 5000
 ENV FLASK_APP=app.py
 
 # Run the application
-CMD [ "python", "app.py", "runserver" ]
+#CMD [ "python", "app.py", "runserver" ]
 
 #ENTRYPOINT [ "flask"]
-#CMD [ "run", "--host", "0.0.0.0" ]
+CMD [ "run", "--host", "0.0.0.0" ]
