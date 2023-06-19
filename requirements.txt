@@ -7,3 +7,4 @@ requests==2.28.2
 APScheduler==3.10.1
 ping3==4.0.4
 pipreqs==0.4.13
+sqlite3>=3.0.0
