@@ -21,7 +21,7 @@ Prereq:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/knocknoc.git
+   git clone https://github.com/n-erickson/knocknoc.git
    cd knocknoc
 
 2. (optional)Create a virtual environment:
