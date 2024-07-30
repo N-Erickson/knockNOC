@@ -1,6 +1,6 @@
 # knockNOC
 
-knockNOC is a modern, customizable network monitoring dashboard designed to provide real-time status updates for various endpoints. It offers a visually appealing, cyberpunk-themed interface that's perfect for NOC (Network Operations Center) displays or personal use.
+knockNOC is a ping-based monitoring solution that does just what it says: pings endpoints and logs their response. It has a modifiable set of alerting metrics and is able to send alerts for non-response to a host of popular platforms.
 
 ## Features
 
