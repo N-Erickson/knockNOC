@@ -29,12 +29,12 @@ Modify the config.yaml file to add your endpoints and configure alerting (see Co
 Build the Docker image:
 
 ```bash
-bashCopydocker-compose build
+docker-compose build
 ```
 
 Start the application:
 ```bash
-bashCopydocker-compose up
+docker-compose up
 ```
 Access the dashboard at http://localhost:5000
 
