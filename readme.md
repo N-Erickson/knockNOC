@@ -26,6 +26,9 @@ cd knockNOC
 ```
 
 Modify the config.yaml file to add your endpoints and configure alerting (see Configuration section for details).
+```bash
+nano config.yaml
+```
 Build the Docker image:
 
 ```bash
