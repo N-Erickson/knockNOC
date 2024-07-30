@@ -17,6 +17,7 @@ frontend/dist/
 .idea/
 *.swp
 *.swo
+.git
 
 # OS generated files
 .DS_Store
