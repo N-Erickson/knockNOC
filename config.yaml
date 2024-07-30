@@ -8,7 +8,7 @@ endpoints:
     display_name: 'Discord'
   - url: https://cnn.com
     display_name: 'CNN'
-  - url: 192.168.1.1
+  - url: 192.168.50.1
     display_name: 'Local Thing'
 
 #display name optional
@@ -20,7 +20,7 @@ ping_frequency: 10
 #conseq failures is how many in a row to trigger alerts
 #cooldown is how long before sending another alert
 alerting:
-  enabled: false
+  enabled: true
   consecutive_failures_threshold: 6
   cooldown_duration: 60
   pagerduty:
@@ -31,9 +31,9 @@ alerting:
     enabled: false
     api_key: YOUR_OPSGENIE_API_KEY
   slack:
-    enabled: false
-    webhook_url: WEBHOOK_URL
-    channel: CHANNEL
+    enabled: true
+    webhook_url: https://hooks.slack.com/services/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
+    channel: alerts-channel
   telegram:
     enabled: false
     bot_token: YOUR_TELEGRAM_BOT_TOKEN
