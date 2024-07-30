@@ -25,10 +25,10 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: false
         tags: my-image-name:${{ github.sha }}
-        outputs: type=docker,dest=/tmp/docker-image.tar
+        outputs: type=oci,dest=/tmp/image.tar
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: docker-image
-        path: /tmp/docker-image.tar
+        path: /tmp/image.tar
