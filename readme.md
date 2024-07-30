@@ -5,8 +5,8 @@ knockNOC is a ping-based monitoring solution that does just what it says: pings 
 ## Features
 
 - Monitor multiple endpoints (URLs or IP addresses)
-- Customizable themes with a cyberpunk aesthetic
-- Real-time status updates
+- Garbage "themes"
+- Pings
 - Configurable alerting system
 - RESTful API for ping data
 - Dockerized for easy deployment
