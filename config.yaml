@@ -32,8 +32,8 @@ alerting:
     api_key: YOUR_OPSGENIE_API_KEY
   slack:
     enabled: true
-    webhook_url: https://hooks.slack.com/services/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
-    channel: alerts-channel
+    webhook_url: Webook_URL
+    channel: Channel_Name
   telegram:
     enabled: false
     bot_token: YOUR_TELEGRAM_BOT_TOKEN
