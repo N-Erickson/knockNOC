@@ -116,3 +116,9 @@ Access the application at http://localhost:5000
 ## Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
+
+## Docker Image 
+```bash
+docker pull ghcr.io/n-erickson/knocknoc:main
+docker run -p 5000:5000 ghcr.io/n-erickson/knocknoc:main
+```
