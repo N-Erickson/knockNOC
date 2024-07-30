@@ -77,13 +77,13 @@ alerting:
 
 ## Alerting Configuration
 
-enabled: Set to true to enable alerting, false to disable.
+**enabled:** Set to true to enable alerting, false to disable.
 
-consecutive_failures_threshold: Number of consecutive failures before an alert is triggered.
+**consecutive_failures_threshold:** Number of consecutive failures before an alert is triggered.
 
-cooldown_duration: Time (in seconds) to wait before sending another alert for the same endpoint.
+**cooldown_duration:** Time (in seconds) to wait before sending another alert for the same endpoint.
 
-Each alerting service (PagerDuty, OpsGenie, Slack, Telegram, Discord) can be individually enabled or disabled.
+Each alerting service (PagerDuty, OpsGenie, Slack, Telegram, Discord) can be individually **enabled** or **disabled**.
 
 Provide the necessary API keys or webhook URLs for the services you enable.
 
