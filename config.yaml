@@ -20,7 +20,7 @@ ping_frequency: 10
 #conseq failures is how many in a row to trigger alerts
 #cooldown is how long before sending another alert
 alerting:
-  enabled: true
+  enabled: false
   consecutive_failures_threshold: 6
   cooldown_duration: 60
   pagerduty:
@@ -31,7 +31,7 @@ alerting:
     enabled: false
     api_key: YOUR_OPSGENIE_API_KEY
   slack:
-    enabled: true
+    enabled: false
     webhook_url: Webook_URL
     channel: Channel_Name
   telegram:
