@@ -53,7 +53,7 @@ endpoints:
 ping_frequency: 60  # in seconds
 
 alerting:
-  enabled: true
+  enabled: false
   consecutive_failures_threshold: 3
   cooldown_duration: 300  # in seconds
   pagerduty:
