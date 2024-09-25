@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Copy built frontend assets from Stage 1
-COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
+COPY --from=frontend-builder /app/frontend/ /app/frontend/
 
 # Expose the application port
 EXPOSE 5000
